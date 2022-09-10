@@ -3,7 +3,7 @@ import json
 from django.views import View
 from gestionTransaccion.models import Empresa
 from django.http import JsonResponse
-
+'''hola'''
 class EmpresaView(View):
     def post(self,request):
         data = json.loads(request.body)
