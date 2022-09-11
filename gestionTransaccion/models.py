@@ -27,8 +27,8 @@ class Usuario(models.Model):
     password=models.TextField(max_length=45,unique=True,null=True)
     nombre_rol=models.TextField(max_length=45)    
     fechaCreacion=models.DateTimeField(auto_now=True)
-    personas_id_usuarios=models.OneToOneField(Personas, on_delete=models.CASCADE, null=False, blank=False)
-    empresas_id_empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    personas_id_usuarios_id=models.OneToOneField(Personas, on_delete=models.CASCADE)
+    empresas_id_empresa_id=models.ForeignKey(Empresa, on_delete=models.CASCADE)
     
 class Transacciones(models.Model):
     id_transaccion=models.IntegerField(auto_created=True,primary_key=True)
