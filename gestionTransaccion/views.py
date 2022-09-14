@@ -2,8 +2,8 @@ import json
 from optparse import Values
 from venv import create
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from gestionTransaccion.models import Empresa, Personas, Usuario
 
@@ -85,21 +85,6 @@ class UsuarioView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-    '''def get(self,request,id_usuario = ""):
-        if len(id_usuario) > 0:
-            Usuario = list(Usuario.objects.filter(id_usuario = id_usuario).values())
-            if len(Usuario) > 0:
-                datos = {"Usuarios": Usuario }
-            else:
-                datos = {"Mensaje": "No se encontro usuario"} 
-        else:
-            Usuario = list(Usuario.objects.values())
-            if len(Usuario) > 0:
-                datos = {"mensaje": Usuario}
-            else:
-                datos = {"mensaje": "No se encontraron usuarios"}
-        return JsonResponse(datos)'''
-    
     def post(self,request):
         data=json.loads(request.body)
         print(data)
@@ -114,13 +99,14 @@ class UsuarioView(View):
             print('segundo get') 
             print(empr)
             print('crear usuario')       
-            usu=Usuario.objects.create(id_usuario=data['id_usuario'],email=data['email'],nombre=data['nombre'],password=data['password'],nombre_rol=data['nombre_rol'],fechaCreacion=data['fechaCreacion'],personas_id_usuarios_id=per,empresas_id_empresa_id=empr)
+            usu=Usuario.objects.create(id_usuario=data['id_usuario'],email=data['email'],nombre=data['nombre'],password=data['password'],nombre_rol=data['nombre_rol'],personas_id_usuarios_id=per,empresas_id_empresa_id=empr)
             usu.save()
+            print(usu)
             mensaje={'Mensaje':'Usuario registrado'}
         except Usuario.DoesNotExist:
             mensaje={"Mensaje":"Usuario no existe"}
         except Exception as e:
-            mensaje={"Mensaje":e}
+            mensaje={"Mensaje":str(e)}
         return JsonResponse(mensaje)
             
   
