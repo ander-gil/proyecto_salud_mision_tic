@@ -22,7 +22,6 @@ class Personas(models.Model):
 class Usuario(models.Model):
     id_usuario=models.IntegerField(primary_key=True)
     email=models.EmailField(unique=True)
-    imagen=models.ImageField(upload_to='images/',blank=True,null=True)
     nombre=models.TextField(max_length=45)
     password=models.TextField(max_length=45,unique=True,null=True)
     nombre_rol=models.TextField(max_length=45)    
