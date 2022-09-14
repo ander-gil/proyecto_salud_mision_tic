@@ -63,6 +63,21 @@ class PersonasView(View):
         persona.save()
         datos={'mensaje': 'Persona registrada exitosamente'}
         return JsonResponse(datos)
+
+    def put(self,request,id_usuario):
+        data=json.loads(request.body)
+        persona=list(Personas.objects.filter(id_usuario=id_usuario).values())
+        if len(persona)>0:
+            per=Personas.objects.get(id_usuario=id_usuario)
+            per.nombre=data["nombre"]
+            per.apellidos=data["apellidos"]
+            per.email=data["email"]
+            per.telefono=data["telefono"]
+            per.save()
+            mensaje={"mensaje":"Persona actualizada exitosamente"}
+        else:
+            mensaje={"mensaje":"No se ha encontrado la persona"}
+        return JsonResponse(mensaje)
     
 class UsuarioView(View):
     
