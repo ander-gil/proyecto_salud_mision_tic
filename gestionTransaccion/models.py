@@ -9,7 +9,8 @@ class Empresa(models.Model):
     telefono=models.TextField(max_length=45,null=True)
     sectorProductivo=models.TextField(max_length=45,null=True)
     estado=models.IntegerField(null=True)
-    fechaCreacion=models.DateTimeField(auto_now=True)     
+    fechaCreacion=models.DateTimeField(auto_now=True)  
+     
     
 class Personas(models.Model):
     id_usuario=models.IntegerField(primary_key=True)
@@ -19,6 +20,7 @@ class Personas(models.Model):
     telefono=models.TextField(max_length=45)
     fechaCreacion=models.DateTimeField(auto_now=True)
     
+        
 class Usuario(models.Model):
     id_usuario=models.IntegerField(primary_key=True)
     email=models.EmailField(unique=True)
@@ -28,6 +30,7 @@ class Usuario(models.Model):
     fechaCreacion=models.DateTimeField(auto_now=True)
     personas_id_usuarios_id=models.OneToOneField(Personas, on_delete=models.CASCADE)
     empresas_id_empresa_id=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+           
     
 class Transacciones(models.Model):
     id_transaccion=models.IntegerField(auto_created=True,primary_key=True)
