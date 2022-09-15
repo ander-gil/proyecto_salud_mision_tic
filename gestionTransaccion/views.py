@@ -93,8 +93,9 @@ class UsuarioView(View):
             print('primer get')
             print(data['personas_id_usuarios_id'])
             per=Personas.objects.get(id_usuario=data['personas_id_usuarios_id'])
-            print('segundo get') 
-            print(data['empresas_id_empresa_id'])
+            print('segundo get')
+            print(data['empresas_id_empresa_id'])    
+            print(per)        
             empr=Empresa.objects.get(id_empresa=data['empresas_id_empresa_id'])
             print('creacion tabla usuario') 
             print(data['id_usuario']) 
@@ -103,8 +104,9 @@ class UsuarioView(View):
             print(data['password'])  
             print(data['nombre_rol']) 
             print(data['personas_id_usuarios_id'])
-            print(data['empresas_id_empresa_id'])            
+            print(data['empresas_id_empresa_id'])
             usu=Usuario.objects.create(id_usuario=data['id_usuario'],email=data['email'],nombre=data['nombre'],password=data['password'],nombre_rol=data['nombre_rol'],personas_id_usuarios_id=data['personas_id_usuarios_id'],empresas_id_empresa_id=data['empresas_id_empresa_id'])
+            print(usu)
             usu.save()
             print(usu)
             mensaje={'Mensaje':'Usuario registrado'}
@@ -112,7 +114,4 @@ class UsuarioView(View):
             mensaje={"Mensaje":"Usuario no existe"}
         except Exception as e:
             mensaje={"Mensaje":str(e)}
-        return JsonResponse(mensaje)
-            
-  
-        
+        return JsonResponse(mensaje)                
