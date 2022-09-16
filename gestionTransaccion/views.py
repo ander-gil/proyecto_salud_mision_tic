@@ -88,24 +88,9 @@ class UsuarioView(View):
     def post(self,request):
         data=json.loads(request.body)
         print(data)
-        try:
-            print('entrando al try')
-            print('primer get')
-            print(data['id_persona_id'])
+        try:            
             per=Personas.objects.get(id_persona=data['id_persona_id'])
-            print('segundo get') 
-            print(data['id_empresa_id'])
-            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])
-            print(per)
-            print(empr)
-            print('creacion tabla usuario') 
-            print(data['id_usuario']) 
-            print(data['email'])
-            print(data['nombre'])  
-            print(data['password'])  
-            print(data['nombre_rol']) 
-            print(per)
-            print(empr)           
+            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])                       
             usu=Usuario.objects.create(id_usuario=data['id_usuario'],
                                        email=data['email'],
                                        nombre=data['nombre'],
@@ -113,16 +98,14 @@ class UsuarioView(View):
                                        nombre_rol=data['nombre_rol'],
                                        id_persona=per,
                                        id_empresa=empr)
-            usu.save()
-            print(usu)
+            usu.save()            
             mensaje={'Mensaje':'Usuario registrado'}
         except Usuario.DoesNotExist:
             mensaje={"Mensaje":"Usuario no existe"}
         except Exception as e:
             mensaje={"Mensaje":str(e)}
         return JsonResponse(mensaje)
-    
-    
+        
     def get(self,request,id_usuario = ""):
         if len(id_usuario) > 0:
             usuario = list(Personas.objects.filter(id_usuario = id_usuario).values())
@@ -136,7 +119,4 @@ class UsuarioView(View):
                 datos = {"mensaje": usuario}
             else:
                 datos = {"mensaje": "No se encontraro persona"}
-        return JsonResponse(datos)
-            
-  
-        
+        return JsonResponse(datos)                      
