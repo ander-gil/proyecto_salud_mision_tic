@@ -105,7 +105,13 @@ class UsuarioView(View):
             print(data['nombre_rol']) 
             print(data['personas_id_usuarios_id'])
             print(data['empresas_id_empresa_id'])
-            usu=Usuario.objects.create(id_usuario=data['id_usuario'],email=data['email'],nombre=data['nombre'],password=data['password'],nombre_rol=data['nombre_rol'],personas_id_usuarios_id=data['personas_id_usuarios_id'],empresas_id_empresa_id=data['empresas_id_empresa_id'])
+            usu=Usuario.objects.create(id_usuario=data['id_usuario'],
+                                       email=data['email'],
+                                       nombre=data['nombre'],
+                                       password=data['password'],
+                                       nombre_rol=data['nombre_rol'],
+                                       personas_id_usuarios_id=per,
+                                       empresas_id_empresa_id=empr)
             print(usu)
             usu.save()
             print(usu)
@@ -114,4 +120,19 @@ class UsuarioView(View):
             mensaje={"Mensaje":"Usuario no existe"}
         except Exception as e:
             mensaje={"Mensaje":str(e)}
-        return JsonResponse(mensaje)                
+        return JsonResponse(mensaje)  
+    
+    def get(self,request,id_usuario = ""):
+        if len(id_usuario) > 0:
+            Usuarios = list(Usuario.objects.filter(id_usuario = id_usuario))
+            if len(Usuarios) > 0:
+                datos = {"Usuarios": Usuarios}           
+            else:
+                datos = {"Mensaje": "No se encontraron usuarios"}
+        else:
+            Usuarios = list(Usuario.objects.values())
+            if len(Usuarios) > 0:
+                datos = {"Mensaje": Usuarios}
+            else:
+                datos = {"Mensaje": "No se encontraron usuarios"}
+        return JsonResponse(datos)
