@@ -42,9 +42,9 @@ class PersonasView(View):
     def dispatch(self, request, *args,**kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-    def get(self,request,id_usuario = ""):
-        if len(id_usuario) > 0:
-            Persona = list(Personas.objects.filter(id_usuario = id_usuario).values())
+    def get(self,request,id_persona = ""):
+        if len(id_persona) > 0:
+            Persona = list(Personas.objects.filter(id_usuario = id_persona).values())
             if len(Persona) > 0:
                 datos = {"Personas": Persona }
             else:
@@ -59,16 +59,16 @@ class PersonasView(View):
     
     def post(self,request):
         data=json.loads(request.body)
-        persona=Personas(id_usuario=data['id_usuario'],nombre=data['nombre'],apellidos=data['apellidos'],email=data['email'],telefono=data['telefono'],fechaCreacion=data['fechaCreacion'])
+        persona=Personas(id_persona=data['id_usuario'],nombre=data['nombre'],apellidos=data['apellidos'],email=data['email'],telefono=data['telefono'],fechaCreacion=data['fechaCreacion'])
         persona.save()
         datos={'mensaje': 'Persona registrada exitosamente'}
         return JsonResponse(datos)
 
-    def put(self,request,id_usuario):
+    def put(self,request,id_persona):
         data=json.loads(request.body)
-        persona=list(Personas.objects.filter(id_usuario=id_usuario).values())
+        persona=list(Personas.objects.filter(id_usuario=id_persona).values())
         if len(persona)>0:
-            per=Personas.objects.get(id_usuario=id_usuario)
+            per=Personas.objects.get(id_usuario=id_persona)
             per.nombre=data["nombre"]
             per.apellidos=data["apellidos"]
             per.email=data["email"]
@@ -91,28 +91,28 @@ class UsuarioView(View):
         try:
             print('entrando al try')
             print('primer get')
-            print(data['personas_id_usuarios_id'])
-            per=Personas.objects.get(id_usuario=data['personas_id_usuarios_id'])
-            print('segundo get')
-            print(data['empresas_id_empresa_id'])    
-            print(per)        
-            empr=Empresa.objects.get(id_empresa=data['empresas_id_empresa_id'])
+            print(data['id_persona_id'])
+            per=Personas.objects.get(id_persona=data['id_persona_id'])
+            print('segundo get') 
+            print(data['id_empresa_id'])
+            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])
+            print(per)
+            print(empr)
             print('creacion tabla usuario') 
             print(data['id_usuario']) 
             print(data['email'])
             print(data['nombre'])  
             print(data['password'])  
             print(data['nombre_rol']) 
-            print(data['personas_id_usuarios_id'])
-            print(data['empresas_id_empresa_id'])
+            print(per)
+            print(empr)           
             usu=Usuario.objects.create(id_usuario=data['id_usuario'],
                                        email=data['email'],
                                        nombre=data['nombre'],
                                        password=data['password'],
                                        nombre_rol=data['nombre_rol'],
-                                       personas_id_usuarios_id=per,
-                                       empresas_id_empresa_id=empr)
-            print(usu)
+                                       id_persona=per,
+                                       id_empresa=empr)
             usu.save()
             print(usu)
             mensaje={'Mensaje':'Usuario registrado'}
@@ -120,19 +120,23 @@ class UsuarioView(View):
             mensaje={"Mensaje":"Usuario no existe"}
         except Exception as e:
             mensaje={"Mensaje":str(e)}
-        return JsonResponse(mensaje)  
+        return JsonResponse(mensaje)
+    
     
     def get(self,request,id_usuario = ""):
         if len(id_usuario) > 0:
-            Usuarios = list(Usuario.objects.filter(id_usuario = id_usuario))
-            if len(Usuarios) > 0:
-                datos = {"Usuarios": Usuarios}           
+            usuario = list(Personas.objects.filter(id_usuario = id_usuario).values())
+            if len(usuario) > 0:
+                datos = {"Personas": usuario }
             else:
-                datos = {"Mensaje": "No se encontraron usuarios"}
+                datos = {"Mensaje": "No se encontro persona"} 
         else:
-            Usuarios = list(Usuario.objects.values())
-            if len(Usuarios) > 0:
-                datos = {"Mensaje": Usuarios}
+            usuario = list(Personas.objects.values())
+            if len(usuario) > 0:
+                datos = {"mensaje": usuario}
             else:
-                datos = {"Mensaje": "No se encontraron usuarios"}
+                datos = {"mensaje": "No se encontraro persona"}
         return JsonResponse(datos)
+            
+  
+        
