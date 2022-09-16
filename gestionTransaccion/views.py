@@ -1,10 +1,12 @@
 import json
 from optparse import Values
+from venv import create
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from gestionTransaccion.models import Empresa, Personas, Usuario
+
 
 class EmpresaView(View):
     
@@ -40,9 +42,9 @@ class PersonasView(View):
     def dispatch(self, request, *args,**kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-    def get(self,request,id_usuario = ""):
-        if len(id_usuario) > 0:
-            Persona = list(Personas.objects.filter(id_usuario = id_usuario).values())
+    def get(self,request,id_persona = ""):
+        if len(id_persona) > 0:
+            Persona = list(Personas.objects.filter(id_usuario = id_persona).values())
             if len(Persona) > 0:
                 datos = {"Personas": Persona }
             else:
@@ -57,16 +59,16 @@ class PersonasView(View):
     
     def post(self,request):
         data=json.loads(request.body)
-        persona=Personas(id_usuario=data['id_usuario'],nombre=data['nombre'],apellidos=data['apellidos'],email=data['email'],telefono=data['telefono'],fechaCreacion=data['fechaCreacion'])
+        persona=Personas(id_persona=data['id_usuario'],nombre=data['nombre'],apellidos=data['apellidos'],email=data['email'],telefono=data['telefono'],fechaCreacion=data['fechaCreacion'])
         persona.save()
         datos={'mensaje': 'Persona registrada exitosamente'}
         return JsonResponse(datos)
 
-    def put(self,request,id_usuario):
+    def put(self,request,id_persona):
         data=json.loads(request.body)
-        persona=list(Personas.objects.filter(id_usuario=id_usuario).values())
+        persona=list(Personas.objects.filter(id_usuario=id_persona).values())
         if len(persona)>0:
-            per=Personas.objects.get(id_usuario=id_usuario)
+            per=Personas.objects.get(id_usuario=id_persona)
             per.nombre=data["nombre"]
             per.apellidos=data["apellidos"]
             per.email=data["email"]
@@ -83,45 +85,58 @@ class UsuarioView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-    def get(self,request,id_usuario = ""):
-        if len(id_usuario) > 0:
-            Usuario = list(Usuario.objects.filter(id_usuario = id_usuario).values())
-            if len(Usuario) > 0:
-                datos = {"Usuarios": Usuario }
-            else:
-                datos = {"Mensaje": "No se encontro usuario"} 
-        else:
-            Usuario = list(Usuario.objects.values())
-            if len(Usuario) > 0:
-                datos = {"mensaje": Usuario}
-            else:
-                datos = {"mensaje": "No se encontraron usuarios"}
-        return JsonResponse(datos)
-    
     def post(self,request):
         data=json.loads(request.body)
+        print(data)
         try:
-            empr=Empresa.objects.get(id_empresa=data['Empresa'])
-            per=Personas.objects.get(id_usuario=data['Personas'])        
-            usu=Usuario.objects.create(id_usuario=data['id_usuario'],email=data['email'],imagen=data['imagen'],nombre=data['nombre'],password=data['password'],nombre_rol=data['nombre_rol'],fechaCreacion=data['fechaCreacion'],personas=per,empresa=empr)
+            print('entrando al try')
+            print('primer get')
+            print(data['id_persona_id'])
+            per=Personas.objects.get(id_persona=data['id_persona_id'])
+            print('segundo get') 
+            print(data['id_empresa_id'])
+            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])
+            print(per)
+            print(empr)
+            print('creacion tabla usuario') 
+            print(data['id_usuario']) 
+            print(data['email'])
+            print(data['nombre'])  
+            print(data['password'])  
+            print(data['nombre_rol']) 
+            print(per)
+            print(empr)           
+            usu=Usuario.objects.create(id_usuario=data['id_usuario'],
+                                       email=data['email'],
+                                       nombre=data['nombre'],
+                                       password=data['password'],
+                                       nombre_rol=data['nombre_rol'],
+                                       id_persona=per,
+                                       id_empresa=empr)
             usu.save()
+            print(usu)
             mensaje={'Mensaje':'Usuario registrado'}
         except Usuario.DoesNotExist:
             mensaje={"Mensaje":"Usuario no existe"}
-        except:
-            mensaje={"Mensaje":"Ya existe el usuario"}
+        except Exception as e:
+            mensaje={"Mensaje":str(e)}
         return JsonResponse(mensaje)
+    
+    
+    def get(self,request,id_usuario = ""):
+        if len(id_usuario) > 0:
+            usuario = list(Personas.objects.filter(id_usuario = id_usuario).values())
+            if len(usuario) > 0:
+                datos = {"Personas": usuario }
+            else:
+                datos = {"Mensaje": "No se encontro persona"} 
+        else:
+            usuario = list(Personas.objects.values())
+            if len(usuario) > 0:
+                datos = {"mensaje": usuario}
+            else:
+                datos = {"mensaje": "No se encontraro persona"}
+        return JsonResponse(datos)
             
-    '''def post(self,request): #insertar un libro
-        data=json.load(request.body)
-        try:
-            lib=Libro.objects.get(Isbn=data["libro"])
-            est=Estudiante.objects.get(documento=data["documento"])
-            pres=Prestamo.objects.create(estudiante=est,libro=lib)
-            pres.save()
-            mensaje={"Mensaje":"Prestamo realizado."}
-        except Libro.DoesNotExist:
-            mensaje={"Mensaje":"El libro no existe"}
-        except Estudiante.DoesNotExist:
-            mensaje={"Mensaje":"El estudiante no existe"}'''      
+  
         
