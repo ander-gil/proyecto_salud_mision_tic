@@ -3,6 +3,7 @@ from gestionTransaccion.views import EmpresaView, PersonasView, UsuarioView, Tra
 
 urlpatterns = [
     path('Empresas/',EmpresaView.as_view(),name = 'Listar'),
+    path('Empresas/<str:id_empresa>', EmpresaView.as_view(), name='buscar'),
     path('Persona/',PersonasView.as_view(),name = 'Listar'), 
     path('Usuario/',UsuarioView.as_view(),name = 'Listar'),
     path('Transacciones/<str:id_empresa>', TransaccionesView.as_view(), name='buscar'),                       

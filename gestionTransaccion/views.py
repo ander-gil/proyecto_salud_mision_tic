@@ -38,7 +38,7 @@ class EmpresaView(View):
     
     def put(self,request,id_empresa):
         data = json.loads(request.body)
-        empresa = list(Empresa.objects.filter(id_empresa = id_empresa).values())
+        empresa = list(Empresa.objects.filter(id_empresa = id_empresa).values())        
         if len(empresa) > 0:
             emp = Empresa.objects.get(id_empresa = id_empresa)
             emp.nombre = data["nombre"]
