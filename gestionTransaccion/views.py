@@ -66,9 +66,9 @@ class PersonasView(View):
 
     def put(self,request,id_persona):
         data=json.loads(request.body)
-        persona=list(Personas.objects.filter(id_usuario=id_persona).values())
+        persona=list(Personas.objects.filter(id_persona=id_persona).values())
         if len(persona)>0:
-            per=Personas.objects.get(id_usuario=id_persona)
+            per=Personas.objects.get(id_persona=id_persona)
             per.nombre=data["nombre"]
             per.apellidos=data["apellidos"]
             per.email=data["email"]
