@@ -34,11 +34,9 @@ class Usuario(models.Model):
     
 class Transacciones(models.Model):
     id_transaccion=models.IntegerField(auto_created=True,primary_key=True)
-    fecha=models.DateField(auto_now=True)
     concepto=models.TextField(max_length=45,null=True)
     monto=models.IntegerField(null=True)
-    id_usuario_tran=models.IntegerField(unique=True,null=True)
     tipoTransaccion=models.TextField(max_length=45)
     fechaCreacion=models.DateTimeField(auto_now=True)
-    id_empresa=models.IntegerField(null=True)
-    id_usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+    id_empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    id_usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
