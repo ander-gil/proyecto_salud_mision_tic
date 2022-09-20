@@ -5,7 +5,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from gestionTransaccion.models import Empresa, Personas, Usuario
+from gestionTransaccion.models import Empresa, Personas, Usuario, Transacciones
 
 
 class EmpresaView(View):
@@ -34,7 +34,24 @@ class EmpresaView(View):
                 datos = {"mensaje": Empresas}
             else:
                 datos = {"mensaje": "No se encontraron empresas"}
-        return JsonResponse(datos)    
+        return JsonResponse(datos)
+    
+    def put(self,request,id_empresa):
+        data = json.loads(request.body)
+        empresa = list(Empresa.objects.filter(id_empresa = id_empresa).values())        
+        if len(empresa) > 0:
+            emp = Empresa.objects.get(id_empresa = id_empresa)
+            emp.nombre = data["nombre"]
+            emp.nit = data["nit"]
+            emp.ciudad = data["ciudad"]
+            emp.direccion = data["direccion"]
+            emp.telefono = data["telefono"]
+            emp.sectorProductivo = data["sectorProductivo"]
+            emp.estado = data["estado"]            
+            mensaje = {"mensaje":"Empresa actualizada exitosamente"}
+        else:
+            mensaje = {"mensaje":"no se encontró empresa"}
+        return JsonResponse(mensaje)    
 
 class PersonasView(View):
     
@@ -87,25 +104,9 @@ class UsuarioView(View):
     
     def post(self,request):
         data=json.loads(request.body)
-        print(data)
         try:
-            print('entrando al try')
-            print('primer get')
-            print(data['id_persona_id'])
             per=Personas.objects.get(id_persona=data['id_persona_id'])
-            print('segundo get') 
-            print(data['id_empresa_id'])
-            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])
-            print(per)
-            print(empr)
-            print('creacion tabla usuario') 
-            print(data['id_usuario']) 
-            print(data['email'])
-            print(data['nombre'])  
-            print(data['password'])  
-            print(data['nombre_rol']) 
-            print(per)
-            print(empr)           
+            empr=Empresa.objects.get(id_empresa=data['id_empresa_id'])  
             usu=Usuario.objects.create(id_usuario=data['id_usuario'],
                                        email=data['email'],
                                        nombre=data['nombre'],
@@ -114,7 +115,6 @@ class UsuarioView(View):
                                        id_persona=per,
                                        id_empresa=empr)
             usu.save()
-            print(usu)
             mensaje={'Mensaje':'Usuario registrado'}
         except Usuario.DoesNotExist:
             mensaje={"Mensaje":"Usuario no existe"}
@@ -137,6 +137,50 @@ class UsuarioView(View):
             else:
                 datos = {"mensaje": "No se encontraro persona"}
         return JsonResponse(datos)
+    
+    
+class TransaccionesView(View):
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args,**kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def post(self,request):
+        data=json.loads(request.body)
+        try:
+            usuario=Usuario.objects.get(id_usuario=data['id_usuario_id'])
+            empresa=Empresa.objects.get(id_empresa=data['id_empresa_id'])  
+            transa=Transacciones.objects.create(id_transaccion=data['id_transaccion'],
+                                                concepto=data['concepto'],
+                                                monto=data['monto'],
+                                                tipoTransaccion=data['tipoTransaccion'],
+                                                id_empresa=empresa,
+                                                id_usuario=usuario)
+            transa.save()
+            mensaje={'Mensaje':'Transaccion registrada con exito'}
+        except Usuario.DoesNotExist:
+            mensaje={"Mensaje":"Usuario no existe"}
+        except Exception as e:
+            mensaje={"Mensaje":str(e)}
+        return JsonResponse(mensaje)
+    
+    
+    def get(self,request,id_empresa = ""):
+        if len(id_empresa) > 0:
+            transaccion = list(Transacciones.objects.filter(id_empresa = id_empresa).values())
+            if len(transaccion) > 0:
+                datos = {"Transacciones": transaccion }
+            else:
+                datos = {"Mensaje": "No se encontro Transacciones asociadas a esta empresa"} 
+        else:
+            transaccion = list(Transacciones.objects.values())
+            if len(transaccion) > 0:
+                datos = {"mensaje": transaccion}
+            else:
+                datos = {"mensaje": "No se encontraro Transacciones"}
+        return JsonResponse(datos)
+    
+    
             
   
         
