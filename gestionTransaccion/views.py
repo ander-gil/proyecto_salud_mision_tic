@@ -34,7 +34,24 @@ class EmpresaView(View):
                 datos = {"mensaje": Empresas}
             else:
                 datos = {"mensaje": "No se encontraron empresas"}
-        return JsonResponse(datos)    
+        return JsonResponse(datos)
+    
+    def put(self,request,id_empresa):
+        data = json.loads(request.body)
+        empresa = list(Empresa.objects.filter(id_empresa = id_empresa).values())        
+        if len(empresa) > 0:
+            emp = Empresa.objects.get(id_empresa = id_empresa)
+            emp.nombre = data["nombre"]
+            emp.nit = data["nit"]
+            emp.ciudad = data["ciudad"]
+            emp.direccion = data["direccion"]
+            emp.telefono = data["telefono"]
+            emp.sectorProductivo = data["sectorProductivo"]
+            emp.estado = data["estado"]            
+            mensaje = {"mensaje":"Empresa actualizada exitosamente"}
+        else:
+            mensaje = {"mensaje":"no se encontró empresa"}
+        return JsonResponse(mensaje)    
 
 class PersonasView(View):
     
