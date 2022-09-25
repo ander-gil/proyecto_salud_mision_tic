@@ -178,9 +178,4 @@ class TransaccionesView(View):
                 datos = {"mensaje": transaccion}
             else:
                 datos = {"mensaje": "No se encontraro Transacciones"}
-        return JsonResponse(datos)
-    
-    
-            
-  
-        
+        return JsonResponse(datos)                    
