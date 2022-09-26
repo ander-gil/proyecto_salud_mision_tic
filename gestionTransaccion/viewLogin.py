@@ -6,20 +6,20 @@ from django.contrib import messages
 
 def iniciarSesion(request):    
     if request.method =="POST":
-        form = AuthenticationForm(request,data = request.POST)
+        form = AuthenticationForm(request,data = request.POST)        
         if form.is_valid():
             nombre = form.cleaned_data.get("username")
             contraseña = form.cleaned_data.get("password")
             usuario = authenticate(username = nombre,password = contraseña)
-            if usuario is not None:
+            if usuario is not None:                
                 try:
-                    empleado = Usuario.objects.get(nombre_rol = "Empleado")
+                    empleado = Usuario.objects.get(email = usuario.email)                    
                     login(request,usuario)
                     return render(request,"empleado.html")
                 except Usuario.DoesNotExist:
                     if usuario.is_superuser:
                         login(request,usuario)
-                        return redirect('') #crear vista administrador
+                        return redirect('../Persona') #crear vista administrador
                     else:
                         messages.success(request,f'Acceso Denegado') 
             else:

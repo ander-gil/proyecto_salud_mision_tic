@@ -10,7 +10,7 @@ urlpatterns = [
     path('Usuario/',UsuarioView.as_view(),name = 'Listar'),
     path('Transacciones/<str:id_empresa>', TransaccionesView.as_view(), name='buscar'),                       
     path('Transacciones/',TransaccionesView.as_view(),name = 'Listar'),  
-    path('ingresar/',iniciarSesion,name='ingresar')                        
+    path('ingresar/',iniciarSesion,name='ingresar')                       
 ]
 
 
