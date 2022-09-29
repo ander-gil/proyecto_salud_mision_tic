@@ -1,6 +1,7 @@
 from django.urls import path
 from gestionTransaccion.views import EmpresaView, PersonasView, UsuarioView, TransaccionesView
 from gestionTransaccion.viewLogin import *
+from gestionTransaccion.viewsFrontend import *
 
 urlpatterns = [
     path('Empresas/',EmpresaView.as_view(),name = 'Listar'),
@@ -10,7 +11,10 @@ urlpatterns = [
     path('Usuario/',UsuarioView.as_view(),name = 'Listar'),
     path('Transacciones/<str:id_empresa>', TransaccionesView.as_view(), name='buscar'),                       
     path('Transacciones/',TransaccionesView.as_view(),name = 'Listar'),  
-    path('ingresar/',iniciarSesion,name='ingresar')                       
+    path('ingresar/',iniciarSesion,name='ingresar'),
+    path('consultaTransacciones/',consultaTransacciones,name='consultar'),
+    path('formTransaccion/',formularioTransaccion,name='formTransaccion')                       
+
 ]
 
 
