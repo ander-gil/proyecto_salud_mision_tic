@@ -125,13 +125,13 @@ class UsuarioView(View):
     
     def get(self,request,id_usuario = ""):
         if len(id_usuario) > 0:
-            usuario = list(Personas.objects.filter(id_usuario = id_usuario).values())
+            usuario = list(Usuario.objects.filter(id_usuario = id_usuario).values())
             if len(usuario) > 0:
-                datos = {"Personas": usuario }
+                datos = {"Usuario": usuario }
             else:
-                datos = {"Mensaje": "No se encontro persona"} 
+                datos = {"Mensaje": "No se encontro usuario"} 
         else:
-            usuario = list(Personas.objects.values())
+            usuario = list(Usuario.objects.values())
             if len(usuario) > 0:
                 datos = {"mensaje": usuario}
             else:
@@ -178,9 +178,4 @@ class TransaccionesView(View):
                 datos = {"mensaje": transaccion}
             else:
                 datos = {"mensaje": "No se encontraro Transacciones"}
-        return JsonResponse(datos)
-    
-    
-            
-  
-        
+        return JsonResponse(datos)                    
