@@ -9,7 +9,7 @@ def principal(request):
     return render(request,"administrador.html")
 
 def consultaTransacciones(request):
-    response=requests.get('http://localhost:8000/transaccion/Transacciones')
+    response=requests.get('http://localhost:8000/transaccion/Transacciones/1')
     transacciones=response.json()
     return render(request,"transacciones.html",transacciones)
 
