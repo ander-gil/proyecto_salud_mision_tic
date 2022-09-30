@@ -15,7 +15,7 @@ def iniciarSesion(request):
                 try:
                     empleado = Usuario.objects.get(email = usuario.email)                    
                     login(request,usuario)
-                    return redirect('../consultaTransaccionesEmp',{'valor':3})
+                    return redirect('../consultaTransaccionesEmp')
                 except Usuario.DoesNotExist:
                     if usuario.is_superuser:
                         login(request,usuario)
