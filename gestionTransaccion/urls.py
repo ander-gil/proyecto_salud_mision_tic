@@ -13,8 +13,8 @@ urlpatterns = [
     path('Transacciones/',TransaccionesView.as_view(),name = 'Listar'),  
     path('ingresar/',iniciarSesion,name='ingresar'),
     path('consultaTransacciones/',consultaTransacciones,name='consultar'),
-    path('formTransaccion/',formularioTransaccion,name='formTransaccion')                       
-
+    path('consultaTransaccionesEmp/',consultaTransacciones,name='consultarEmp'),
+    
+    path('formTransaccion/',formularioTransaccion,name='formTransaccion'),                       
+    path('guardarTransaccion/',guardartransaccion,name='registrar')
 ]
-
-
