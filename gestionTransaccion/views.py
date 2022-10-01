@@ -165,7 +165,7 @@ class TransaccionesView(View):
         return JsonResponse(mensaje)
     
     
-    def get(self,request,id_empresa):
+    def get(self,request,id_empresa=""):
         if len(id_empresa) > 0:
             transaccion = list(Transacciones.objects.filter(id_empresa = id_empresa).values())
             if len(transaccion) > 0:

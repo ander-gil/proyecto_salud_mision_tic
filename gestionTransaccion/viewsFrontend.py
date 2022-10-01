@@ -9,10 +9,16 @@ def principal(request):
     return render(request,"administrador.html")
 
 def consultaTransacciones(request):
-    response=requests.get('http://localhost:8000/transaccion/Transacciones/1')
+    response=requests.get('http://localhost:8000/transaccion/Transacciones')    
     transacciones=response.json()
     return render(request,"transacciones.html",transacciones)
 
+def ConsultaTransaccionesEmp(request):    
+    dato = request.POST.get('id_empresa',False)
+    response = requests.get('http://localhost:8000/transaccion/Transacciones/'+dato)
+    transaccion = response.json()
+    return render(request,'transacciones.html',transaccion)
+    
 def formularioTransaccion(request):
     return render(request,"formTransaccion.html")
 
