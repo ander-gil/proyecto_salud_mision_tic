@@ -9,39 +9,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <title>ConsultaTransacciones</title>
+    <title>consultaPersonas</title>
 </head>
 <section class="vh-110" style="background-color: #0909e650;">
 <body>
 
     <div class="container">
-        <h3 class="mb-3 text-center">Transacciones</h3>
+        <h3 class="mb-3 text-center">Personas</h3>
 
-        <a href="{%url 'formTransaccion'%}">
-            <button type="button" class="btn btn-primary">Agregar Transaccion</button></a>
+        <a href="{%url 'formPersona'%}">
+            <button type="button" class="btn btn-primary">Agregar Persona</button></a>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID Transaccion</th>
-                    <th scope="col">Concepto</th>
-                    <th scope="col">Monto</th>
-                    <th scope="col">Tipo de Transaccion</th>
-                    <th scope="col">Fecha de Creacion</th>
-                    <th scope="col">Id Empresa</th>
-                    <th scope="col">Id Usuario</th>
+                    <th scope="col">Id persona</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
                 </tr>
             </thead>
             <tbody>
-                {% for tran in mensaje%}
+                {% for pers in mensaje%}
                 <tr>
-                    <td>{{tran.id_transaccion}}</td>
-                    <td>{{tran.concepto}}</td>
-                    <td>{{tran.monto}}</td>
-                    <td>{{tran.tipoTransaccion}}</td>
-                    <td>{{tran.fechaCreacion}}</td>
-                    <td>{{tran.id_empresa_id}}</td>
-                    <td>{{tran.id_usuario_id}}</td>
+                    <td>{{pers.id_persona}}</td>
+                    <td>{{pers.nombre}}</td>
+                    <td>{{pers.apellidos}}</td>
+                    <td>{{pers.email}}</td>
+                    <td>{{pers.telefono}}</td>
                 </tr>
 
                 {%endfor%}

@@ -7,7 +7,7 @@ from django.contrib import messages
 def iniciarSesion(request):    
     if request.method =="POST":
         form = AuthenticationForm(request,data = request.POST)        
-        if form.is_valid():
+        if form.is_valid():            
             nombre = form.cleaned_data.get("username")
             contraseña = form.cleaned_data.get("password")
             usuario = authenticate(username = nombre,password = contraseña)
