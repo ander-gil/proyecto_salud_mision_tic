@@ -18,30 +18,38 @@
         <h2>Registrar Usuario</h2>
     </div>
     <div class="container">
-        <form action="../guardarTransaccion/" method="post" class="container">
+        <form action="../guardarUsuario/" method="post" class="container">
             {% csrf_token %}            
             <div class="form-group">
-                <label for="id_transaccion">Id Persona</label>
-                <input type="text" class="form-control" id="id_persona" name="id_persona">
+                <label for="id_usuario">Id Usuario</label>
+                <input type="text" class="form-control" id="id_usuario" name="id_usuario">
             </div>  
             <div class="form-group">
-                <label for="concepto">Nombre</label>
+                <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre">
             </div>        
             <div class="form-group">
-                <label for="monto">Password</label>
-                <input type="text" class="form-control" id="password" name="password">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <div class="form-group">
-                <label for="monto">Nombre rol</label>
-                <input type="text" class="form-control" id="nombre_rol" name="nombre_rol">
-            </div>            
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>                        
+            <div class="mb-3">
+                <label for="nombre_rol" class="form-label">Nombre rol</label>
+                <select class="form-select" name="nombre_rol" aria-label="Default select example">
+                    <option value="Ninguna" selected>Seleccione</option>
+                    <option value="Empleado">Empleado</option>
+                    <option value="Aministrador">Aministrador</option>                
+                </select>
+            </div>               
             <div class="form-group">
-                <label for="id_empresa">Id persona</label>
+                <label for="id_persona_id">Id persona</label>
                 <input type="text" class="form-control" id="id_persona_id" name="id_persona_id">
             </div>
             <div class="form-group">
-                <label for="id_Usuario">Id empresa</label>
+                <label for="id_empresa_id">Id empresa</label>
                 <input type="text" class="form-control" id="id_empresa_id" name="id_empresa_id">
             </div>
             

@@ -15,7 +15,7 @@ def consultaTransacciones(request):
 
 def ConsultaTransaccionesEmp(request):    
     dato = request.POST.get('id_empresa',False)
-    response = requests.get('http://localhost:8000/transaccion/Transacciones/'+dato)
+    response = requests.get('http://localhost:8000/transaccion/Transacciones/')
     transaccion = response.json()
     return render(request,'transacciones.html',transaccion)
     
@@ -58,6 +58,12 @@ def guardarEmpresa(request):
     requests.post('http://localhost:8000/transaccion/Empresas/',data = json.dumps(datos))
     return redirect('../consultaEmpresas')
 
+def cargarFormEmpresa(request,id_empresa):
+    response = requests.get('http://localhost:8000/transaccion/Empresas/' + id_empresa)
+    empresa = response.json()       
+    return render(request,"actualizarEmpresa.html",empresa)
+    
+    
 def formularioPersonas(request):
     return render(request,"formPersona.html")
 
@@ -73,10 +79,27 @@ def guardarPersona(request):
         "apellidos": request.POST['apellidos'],
         "email":request.POST['email'],
         "telefono":request.POST['telefono'],      
-    }
-    print(datos)
+    }    
     requests.post('http://localhost:8000/transaccion/Persona/',data = json.dumps(datos))
     return redirect('../consultaPersonas')
+
+def cargarFormPersona(request,id_persona):
+    response = requests.get('http://localhost:8000/transaccion/Persona/' + id_persona) 
+    pesona = response.json()    
+    return render(request,"actualizaPersona.html",pesona)
+
+
+
+def ActualizarPersona(request):
+    codigo = request.POST['id_persona']
+    datos={
+        "nombre":request.POST['nombre'],
+        "apellidos":request.POST['apellidos'],
+        "email":request.POST['email'],
+        "telefono":request.POST['telefono']        
+    }
+    requests.put('http://localhost:8000/transaccion/Persona/' + codigo,data=json.dumps(datos))
+    return redirect('../consultaPersonas/')
 
 def formularioUsuarios(request):
     return render(request,"formUsuario.html")
@@ -88,7 +111,7 @@ def consultaUsuarios(request):
 
 def guardarUsuario(request):        
     datos = {    
-        "id_usuario": request.POST['id_persona'], 
+        "id_usuario": request.POST['id_usuario'], 
         "email":request.POST['email'],        
         "nombre": request.POST['nombre'],
         "password": request.POST['password'],        

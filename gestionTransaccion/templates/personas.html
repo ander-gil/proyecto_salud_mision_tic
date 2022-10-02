@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,40 +12,48 @@
         crossorigin="anonymous"></script>
     <title>consultaPersonas</title>
 </head>
-<section class="vh-110" style="background-color: #0909e650;">
-<body>
+<section class="vh-110">
 
-    <div class="container">
-        <h3 class="mb-3 text-center">Personas</h3>
+    <body>
+        <div class="container">
+            <h3 class="mb-3 text-center">Personas</h3>
+            <form action="../consultaPersonas/" method="post">
+                {% csrf_token %}
 
-        <a href="{%url 'formPersona'%}">
-            <button type="button" class="btn btn-primary">Agregar Persona</button></a>
+            </form>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id persona</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefono</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for pers in mensaje%}
-                <tr>
-                    <td>{{pers.id_persona}}</td>
-                    <td>{{pers.nombre}}</td>
-                    <td>{{pers.apellidos}}</td>
-                    <td>{{pers.email}}</td>
-                    <td>{{pers.telefono}}</td>
-                </tr>
+            <a href="{%url 'formPersona'%}">
+                <button type="button" class="btn btn-primary">Agregar Persona</button></a>
 
-                {%endfor%}
-            </tbody>
-        </table>
-    </div>
-</body>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id persona</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Editar</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pers in mensaje%}
+                    <tr>
+                        <td>{{pers.id_persona}}</td>
+                        <td>{{pers.nombre}}</td>
+                        <td>{{pers.apellidos}}</td>
+                        <td>{{pers.email}}</td>
+                        <td>{{pers.telefono}}</td>
+                        <td>
+                            <a href="{% url 'formularioPersona' pers.id_persona %}">
+                            <button type="button" class="btn btn-warning">Editar</button></a></td>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </body>
 </section>
 
 </html>
