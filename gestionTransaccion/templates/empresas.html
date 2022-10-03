@@ -9,39 +9,41 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <title>ConsultaTransacciones</title>
+    <title>consultaEmpresas</title>
 </head>
 <section class="vh-110" style="background-color: #0909e650;">
 <body>
 
     <div class="container">
-        <h3 class="mb-3 text-center">Transacciones</h3>
+        <h3 class="mb-3 text-center">Empresas</h3>
 
-        <a href="{%url 'formTransaccion'%}">
-            <button type="button" class="btn btn-primary">Agregar Transaccion</button></a>
+        <a href="{%url 'formEmpresa'%}">
+            <button type="button" class="btn btn-primary">Agregar Empresa</button></a>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID Transaccion</th>
-                    <th scope="col">Concepto</th>
-                    <th scope="col">Monto</th>
-                    <th scope="col">Tipo de Transaccion</th>
-                    <th scope="col">Fecha de Creacion</th>
                     <th scope="col">Id Empresa</th>
-                    <th scope="col">Id Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Nit</th>
+                    <th scope="col">Cuidad</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Sector productivo</th>
+                    <th scope="col">Estado empresa</th>
                 </tr>
             </thead>
             <tbody>
-                {% for tran in mensaje%}
+                {% for empr in mensaje%}
                 <tr>
-                    <td>{{tran.id_transaccion}}</td>
-                    <td>{{tran.concepto}}</td>
-                    <td>{{tran.monto}}</td>
-                    <td>{{tran.tipoTransaccion}}</td>
-                    <td>{{tran.fechaCreacion}}</td>
-                    <td>{{tran.id_empresa_id}}</td>
-                    <td>{{tran.id_usuario_id}}</td>
+                    <td>{{empr.id_empresa}}</td>
+                    <td>{{empr.nombre}}</td>
+                    <td>{{empr.nit}}</td>
+                    <td>{{empr.ciudad}}</td>
+                    <td>{{empr.direccion}}</td>
+                    <td>{{empr.telefono}}</td>
+                    <td>{{empr.sectorProductivo}}</td>
+                    <td>{{empr.estado}}</td>
                 </tr>
 
                 {%endfor%}

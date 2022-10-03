@@ -13,8 +13,17 @@ urlpatterns = [
     path('Transacciones/',TransaccionesView.as_view(),name = 'Listar'),  
     path('ingresar/',iniciarSesion,name='ingresar'),
     path('consultaTransacciones/',consultaTransacciones,name='consultar'),
-    path('consultaTransaccionesEmp/',consultaTransacciones,name='consultarEmp'),
-    
+    path('consultaTransaccionesEmp/',ConsultaTransaccionesEmp,name='consultarEmp'),
     path('formTransaccion/',formularioTransaccion,name='formTransaccion'),                       
-    path('guardarTransaccion/',guardartransaccion,name='registrar')
+    path('guardarTransaccion/',guardartransaccion,name='registrar'),
+    path('formEmpresa/',formularioEmpresa,name='formEmpresa'),
+    path('consultaEmpresas/',consultaEmpresas,name='consultar'),
+    path('consultaPersonas/',consultaPersonas,name='consultar'),
+    path('guardarPersona/',guardarPersona,name='registrar'),
+    path('formPersona/',formularioPersonas,name='formPersona'),
+    path('consultaUsuarios/',consultaUsuarios,name='consultar'),
+    path('guardarUsuario/',guardarUsuario,name='registrar'),
+    path('formUsuario/',formularioUsuarios,name='formUsuario'),
+    path('formAdministrador/',formularioAdministrador,name='formAdministrador'),
+    path('formEmpleados/',formularioEmpleados,name='formEmpleados')
 ]
