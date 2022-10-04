@@ -16,7 +16,14 @@ class EmpresaView(View):
     
     def post(self,request):
         data = json.loads(request.body)
-        empresa = Empresa(id_empresa = data['id_empresa'],nombre = data['nombre'],nit = data['nit'],ciudad = data['ciudad'],direccion = data['direccion'],telefono= data['telefono'],sectorProductivo = data['sectorProductivo'],estado=data['estado'],fechaCreacion=data['fechaCreacion'])
+        empresa = Empresa(  id_empresa = data['id_empresa'],
+                            nombre = data['nombre'],
+                            nit = data['nit'],
+                            ciudad = data['ciudad'],
+                            direccion = data['direccion'],
+                            telefono= data['telefono'],
+                            sectorProductivo = data['sectorProductivo'],
+                            estado=data['estado'])
         empresa.save()
         datos = {'mensaje':'Empresa registrada exitosamente !'}
         return JsonResponse(datos) 
@@ -61,7 +68,7 @@ class PersonasView(View):
     
     def get(self,request,id_persona = ""):
         if len(id_persona) > 0:
-            Persona = list(Personas.objects.filter(id_usuario = id_persona).values())
+            Persona = list(Personas.objects.filter(id_persona = id_persona).values())
             if len(Persona) > 0:
                 datos = {"Personas": Persona }
             else:
@@ -76,7 +83,11 @@ class PersonasView(View):
     
     def post(self,request):
         data=json.loads(request.body)
-        persona=Personas(id_persona=data['id_usuario'],nombre=data['nombre'],apellidos=data['apellidos'],email=data['email'],telefono=data['telefono'],fechaCreacion=data['fechaCreacion'])
+        persona=Personas(id_persona=data['id_persona'],
+                         nombre=data['nombre'],
+                         apellidos=data['apellidos'],
+                         email=data['email'],
+                         telefono=data['telefono'])
         persona.save()
         datos={'mensaje': 'Persona registrada exitosamente'}
         return JsonResponse(datos)
@@ -137,7 +148,6 @@ class UsuarioView(View):
             else:
                 datos = {"mensaje": "No se encontraro persona"}
         return JsonResponse(datos)
-    
     
 class TransaccionesView(View):
     

@@ -15,11 +15,11 @@ def iniciarSesion(request):
                 try:
                     empleado = Usuario.objects.get(email = usuario.email)                                         
                     login(request,usuario)                                        
-                    return redirect('../consultaTransaccionesEmp')
+                    return redirect('../formEmpleados')
                 except Usuario.DoesNotExist:
                     if usuario.is_superuser:
                         login(request,usuario)
-                        return redirect('../consultaTransacciones')
+                        return redirect('../formAdministrador')
                     else:
                         messages.success(request,f'Acceso Denegado') 
             else:

@@ -15,33 +15,36 @@
 
 <body class="m-0 row justify-content-center">
     <div class="container text-center">
-        <h2>Registrar Empleado</h2>
+        <h2>Actualizar Persona</h2>
     </div>
     <div class="container">
         <form action="../guardarPersona/" method="post" class="container">
-            {% csrf_token %}            
+            {% csrf_token %}  
+            {% for pers in Personas %}  
+
             <div class="form-group">
                 <label for="id_persona">Id persona</label>
-                <input type="text" class="form-control" id="id_persona" name="id_persona">
+                <input type="text" class="form-control" id="id_persona" name="id_persona" value="{{pers.id_persona}}" disabled>
+                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="{{pers.id_persona}}">
             </div>  
             <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre">
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{pers.nombre}}"">
             </div>        
             <div class="form-group">
                 <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos">
+                <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{pers.apellidos}}"">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email">
+                <input type="text" class="form-control" id="email" name="email" value="{{pers.email}}"">
             </div>            
             <div class="form-group">
                 <label for="telefono">Telefono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono">
-            </div>
-            
-            <button type="submit" class="btn btn-primary">Registrar</button>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{pers.telefono}}"">
+            </div>            
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            {%endfor%}
         </form>
     </div>
 </body>

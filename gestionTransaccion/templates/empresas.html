@@ -11,7 +11,7 @@
         crossorigin="anonymous"></script>
     <title>consultaEmpresas</title>
 </head>
-<section class="vh-110" style="background-color: #0909e650;">
+<section class="vh-110">
 <body>
 
     <div class="container">
@@ -31,6 +31,7 @@
                     <th scope="col">Telefono</th>
                     <th scope="col">Sector productivo</th>
                     <th scope="col">Estado empresa</th>
+                    <th scope="col">Editar</th>   
                 </tr>
             </thead>
             <tbody>
@@ -44,8 +45,11 @@
                     <td>{{empr.telefono}}</td>
                     <td>{{empr.sectorProductivo}}</td>
                     <td>{{empr.estado}}</td>
+                    <td>
+                        <a href="{% url 'cargarFormEmpresa' empr.id_empresa %}">
+                        <button type="button" class="btn btn-warning">Editar</button></a></td>
+                    </td>
                 </tr>
-
                 {%endfor%}
             </tbody>
         </table>

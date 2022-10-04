@@ -18,12 +18,16 @@ urlpatterns = [
     path('guardarTransaccion/',guardartransaccion,name='registrar'),
     path('formEmpresa/',formularioEmpresa,name='formEmpresa'),
     path('consultaEmpresas/',consultaEmpresas,name='consultar'),
+    path('guardarEmpresa/',guardarEmpresa,name='guardarEmp'),
+    path('cargarFormEmpresa/<str:id_empresa>',cargarFormEmpresa,name='cargarFormEmpresa'),
     path('consultaPersonas/',consultaPersonas,name='consultar'),
     path('guardarPersona/',guardarPersona,name='registrar'),
+    path('cargarFormPersona/<str:id_persona>',cargarFormPersona,name='formularioPersona'),
     path('formPersona/',formularioPersonas,name='formPersona'),
     path('consultaUsuarios/',consultaUsuarios,name='consultar'),
     path('guardarUsuario/',guardarUsuario,name='registrar'),
     path('formUsuario/',formularioUsuarios,name='formUsuario'),
     path('formAdministrador/',formularioAdministrador,name='formAdministrador'),
     path('formEmpleados/',formularioEmpleados,name='formEmpleados')
+    
 ]
