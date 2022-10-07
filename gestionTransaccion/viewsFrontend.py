@@ -63,7 +63,6 @@ def cargarFormEmpresa(request,id_empresa):
     empresa = response.json()       
     return render(request,"actualizarEmpresa.html",empresa)
     
-    
 def formularioPersonas(request):
     return render(request,"formPersona.html")
 
@@ -87,8 +86,6 @@ def cargarFormPersona(request,id_persona):
     response = requests.get('http://localhost:8000/transaccion/Persona/' + id_persona) 
     pesona = response.json()    
     return render(request,"actualizaPersona.html",pesona)
-
-
 
 def ActualizarPersona(request):
     codigo = request.POST['id_persona']
